@@ -34,7 +34,7 @@ const Books = () => {
                 {book.title}
               </h2>
 
-              <div className="bg-green-400 absolute top-0 right-0 py-1 px-2">
+              <div className="bg-green-500 text-white absolute top-0 right-0 py-1 px-2">
                 {moneyFormat(book.price)}
               </div>
 
