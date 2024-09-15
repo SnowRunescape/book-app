@@ -1,3 +1,4 @@
+import { queryClient } from "@/contexts/providers/react-query";
 import { API, parseResponseData } from "@/services/api";
 import { RawResponse } from "@/services/api/types";
 import { Book } from "@/types/Book";
@@ -27,6 +28,12 @@ export const useCreateBook = (
         }
       })
       .then(data => parseResponseData(data));
+  },
+  onSuccess: async () => {
+    queryClient.removeQueries({
+      queryKey: ['books'],
+      type: 'all',
+    });
   },
   ...options
 });
