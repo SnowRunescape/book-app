@@ -8,7 +8,13 @@ const Customer = () => {
 
   return (
     <div>
-      <H1>Clientes</H1>
+      <div className="flex justify-between">
+        <H1>Clientes</H1>
+
+        <Link to={`/customers/create`}>
+          <Button variant="success">Cadastrar Cliente</Button>
+        </Link>
+      </div>
 
       {isPending ? (
         <div>Carregando clientes...</div>

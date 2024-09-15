@@ -9,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 const schema = z.object({
-  title: z.string().min(2, 'O nome deve ter pelo menos 2 caracteres'),
-  author: z.string().min(2, 'O nome deve ter pelo menos 2 caracteres'),
-  price: z.string().min(2, 'A senha deve ter pelo menos 2 caracteres'),
-  isbn: z.string().min(2, 'A senha deve ter pelo menos 2 caracteres'),
-  stock: z.string().min(2, 'A senha deve ter pelo menos 2 caracteres'),
+  title: z.string().min(2, 'O título deve ter pelo menos 2 caracteres'),
+  author: z.string().min(2, 'O nome do autor deve ter pelo menos 2 caracteres'),
+  price: z.string().min(1, 'O preço deve ser informado'),
+  isbn: z.string().min(10, 'O ISBN deve ter pelo menos 10 caracteres'),
+  stock: z.string().min(1, 'A quantidade em estoque deve ser informada'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -27,7 +27,7 @@ const BookCreate = () => {
 
   const onSubmit = (data: any) => {
     mutateAsync(data).then(_ => {
-      notification('Livro criado com sucesso!', 'success');
+      notification('Livro cadastrado com sucesso!', 'success');
       navigate('/books');
     }).catch(error => {
       const message = error.response.data[0]?.message ?? 'Aconteceu um erro, tente novamente!';
@@ -44,10 +44,10 @@ const BookCreate = () => {
 
   return (
     <div>
-      <H1>Criar Livro</H1>
+      <H1>Cadastrar Livro</H1>
 
       <form className="flex flex-col gap-3 p-2 bg-white rounded-md border" onSubmit={handleSubmit(onSubmit, onError)}>
-        <InputWithLabel label="Titulo" {...register('title')} />
+        <InputWithLabel label="Título" {...register('title')} />
 
         <InputWithLabel label="Autor" {...register('author')} />
         <InputWithLabel label="Preço" {...register('price')} />

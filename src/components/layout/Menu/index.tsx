@@ -19,7 +19,6 @@ const Menu = ({ menus }: any) => {
           <NavLink
             to={menu.link}
             className={currentPage}
-            end
           >
             {menu.name}
           </NavLink>

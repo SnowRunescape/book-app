@@ -13,7 +13,7 @@ const Books = () => {
         <H1>Livros</H1>
 
         <Link to={`/books/create`}>
-          <Button variant="success">Criar Livro</Button>
+          <Button variant="success">Cadastrar Livro</Button>
         </Link>
       </div>
 
