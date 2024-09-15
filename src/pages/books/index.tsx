@@ -4,11 +4,17 @@ import { useBooks } from "@/services/books";
 import { Link } from "react-router-dom";
 
 const Books = () => {
-  const { data: books, isPending } = useBooks(); // react-query
+  const { data: books, isPending } = useBooks();
 
   return (
     <div>
-      <H1>Livros</H1>
+      <div className="flex justify-between">
+        <H1>Livros</H1>
+
+        <Link to={`/books/create`}>
+          <Button variant="success">Criar Livro</Button>
+        </Link>
+      </div>
 
       {isPending ? (
         <div>Carregando livros...</div>
@@ -16,12 +22,19 @@ const Books = () => {
         <div className="flex gap-3">
           {books?.map(book => (
             <div key={book.id} className="p-2 bg-white rounded-md border w-[320px]">
-              <div>
-                {book.title}
+              <div className="flex justify-center">
+                <img
+                  src="https://cdn.awsli.com.br/600x450/2515/2515191/produto/2668231228e31c3de8c.jpg"
+                  className="max-h-[210px]"
+                />
               </div>
 
+              <h2>
+                {book.title}
+              </h2>
+
               <div className="text-right">
-                <Link to={`/books/${book.id}`}><Button>Acessar</Button></Link>
+
               </div>
             </div>
           ))}
