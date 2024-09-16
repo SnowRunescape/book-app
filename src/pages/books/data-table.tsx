@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { BASE_URL_IMAGE } from "@/config";
 import { moneyFormat } from "@/lib/utils";
 import { useBooks } from "@/services/books";
 import { Book } from "@/types/Book";
@@ -30,17 +31,22 @@ import { Link } from "react-router-dom";
 
 export const columns: ColumnDef<Book>[] = [
   {
-    id: "image",
-    cell: () => (
-      <>
-        <img
-          src="https://cdn.awsli.com.br/600x450/2515/2515191/produto/2668231228e31c3de8c.jpg"
-          className="max-h-[100px]"
-        />
-      </>
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    accessorKey: "image",
+    header: "",
+    cell: ({ row }) => {
+      const imageUrl = row.getValue("image") ?
+        `${BASE_URL_IMAGE}${row.getValue("image")}` :
+        '/assets/img/book_not_available.webp';
+
+      return (
+        <div className="capitalize">
+          <img
+            src={imageUrl}
+            className="max-h-[100px]"
+          />
+        </div>
+      );
+    },
   },
   {
     accessorKey: "title",

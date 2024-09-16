@@ -6,7 +6,7 @@ import { AxiosError } from "axios";
 export const useUpload = (
   options?: UseMutationOptions<any, AxiosError, any>,
 ) => useMutation({
-  mutationFn: async (data: any) => {
+  mutationFn: async (data: FormData) => {
     return API
       .post<RawResponse<any>>(`/upload`, data, {
         headers: {
