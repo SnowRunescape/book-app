@@ -74,8 +74,8 @@ const CustomerCreate = () => {
   };
 
   return (
-    <div>
-      <H1>Cadastrar Livro</H1>
+    <div className="flex flex-col gap-4">
+      <H1>Cadastrar Cliente</H1>
 
       <form
         className="flex flex-col gap-3 p-2 bg-white rounded-md border"
