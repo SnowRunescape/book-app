@@ -13,6 +13,7 @@ import {
 import { Plus } from "lucide-react";
 import * as React from "react";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,54 +24,47 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { moneyFormat } from "@/lib/utils";
-import { useBooks } from "@/services/books";
-import { Book } from "@/types/Book";
+import { formatCPF } from "@/lib/utils";
+import { useCustomers } from "@/services/customers";
+import { Customer } from "@/types/Customer";
 import { Link } from "react-router-dom";
 
-export const columns: ColumnDef<Book>[] = [
+export const columns: ColumnDef<Customer>[] = [
   {
     id: "image",
     cell: () => (
-      <>
-        <img
-          src="https://cdn.awsli.com.br/600x450/2515/2515191/produto/2668231228e31c3de8c.jpg"
-          className="max-h-[100px]"
-        />
-      </>
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>BC</AvatarFallback>
+      </Avatar>
     ),
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: "title",
-    header: "Titulo",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("title")}</div>,
+    accessorKey: "name",
+    header: "Nome",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "author",
-    header: "Autor",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("author")}</div>,
+    accessorKey: "cpf",
+    header: "CPF",
+    cell: ({ row }) => <div className="capitalize">{formatCPF(row.getValue("cpf"))}</div>,
   },
   {
-    accessorKey: "isbn",
-    header: "ISBN",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("isbn")}</div>,
+    accessorKey: "city",
+    header: "Cidade",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("city")}</div>,
   },
   {
-    accessorKey: "price",
-    header: "Preço",
-    cell: ({ row }) => <div className="capitalize">{moneyFormat(row.getValue("price"))}</div>,
-  },
-  {
-    accessorKey: "stock",
-    header: "Estoque",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("stock")}</div>,
+    accessorKey: "state",
+    header: "Estado",
+    cell: ({ row }) => <div className="capitalize">{row.getValue("state")}</div>,
   },
 ];
 
-export function BookTable() {
-  const { data: classes } = useBooks();
+export function CustomersTable() {
+  const { data: classes } = useCustomers();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -118,13 +112,13 @@ export function BookTable() {
         />
 
         <div className="ml-auto">
-          <Link to="/books/create">
+          <Link to="/customers/create">
             <Button
               variant="success"
               className="ml-auto"
             >
               <Plus className="mr-1 h-5 w-5" />
-              Cadastrar Livro
+              Cadastrar Cliente
             </Button>
           </Link>
         </div>
