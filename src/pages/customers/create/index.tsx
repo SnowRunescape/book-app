@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useMemo } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useHookFormMask } from "use-mask-input";
 import { z } from "zod";
 
 const schema = z.object({
@@ -33,6 +34,7 @@ const CustomerCreate = () => {
   const { register, handleSubmit, setValue, watch, trigger } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+  const registerWithMask = useHookFormMask(register);
 
   const cep = useMemo(() => {
     return watch('cep')?.replace(/\D/g, '') ?? '';
@@ -87,8 +89,8 @@ const CustomerCreate = () => {
       >
         <InputWithLabel label="Nome" {...register("name")} />
 
-        <InputWithLabel label="CPF" {...register("cpf")} />
-        <InputWithLabel label="CEP" {...register("cep")} />
+        <InputWithLabel label="CPF" {...registerWithMask("cpf", ['999.999.999-99'])} />
+        <InputWithLabel label="CEP" {...registerWithMask("cep", ['99999-999'])} />
 
         <div className="flex gap-2">
           <InputWithLabel label="Endereço" {...register("street")} readOnly />
