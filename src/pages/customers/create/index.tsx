@@ -6,7 +6,7 @@ import { isValidCPF } from "@/lib/utils";
 import { useCEP } from "@/services/brasilapi";
 import { useCreateCustomer } from "@/services/customers";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -30,12 +30,16 @@ type FormData = z.infer<typeof schema>;
 const CustomerCreate = () => {
   const navigate = useNavigate();
   const { mutateAsync } = useCreateCustomer();
-  const { register, handleSubmit, getValues, setValue, watch, trigger,  } = useForm<FormData>({
+  const { register, handleSubmit, setValue, watch, trigger } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
-  const { data } = useCEP(getValues('cep'), {
-    enabled: watch('cep')?.length == 8
+  const cep = useMemo(() => {
+    return watch('cep')?.replace(/\D/g, '') ?? '';
+  }, [watch('cep')]);
+
+  const { data } = useCEP(cep, {
+    enabled: cep.length === 8
   });
 
   useEffect(() => {
