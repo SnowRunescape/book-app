@@ -2,7 +2,7 @@ export const createMenu = () => {
   return [
     {
       name: "Dashboard",
-      link: `/s`,
+      link: `/`,
     },
     {
       name: "Livros",
